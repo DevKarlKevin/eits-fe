@@ -27,7 +27,3 @@ Clone the repository
 Run command `docker-compose up --build`
 
 App is served on http://localhost:4200/
-
-run `docker build -t eits-fe:latest .`
-
-After build finishes, run command `docker run -d -p 4200:80 eits-fe`
