@@ -1,0 +1,22 @@
+<ul>
+  <li *ngFor="let module of group.child_objects">
+    <ng-container *ngIf="!module.parent_level">
+      <a (click)="onValueSelected(module)" role="button">{{ module.title }}</a>
+    </ng-container>
+    <p *ngIf="module.parent_level" class="m-0">{{module.title}}</p>
+    <ul *ngIf="module.parent_level">
+      <li *ngFor="let childObject of module.child_objects">
+        <ng-container *ngIf="!childObject.parent_level">
+          <a (click)="onValueSelected(childObject)" role="button">{{ childObject.title }}</a>
+        </ng-container>
+        <p *ngIf="childObject.parent_level" class="m-0">{{childObject.title}}</p>
+
+        <app-level-display-v2
+          *ngIf="childObject.parent_level"
+          [group]="childObject"
+          (levelSelected)="onValueSelected($event)"
+        ></app-level-display-v2>
+      </li>
+    </ul>
+  </li>
+</ul>

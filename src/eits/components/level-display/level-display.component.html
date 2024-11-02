@@ -1,0 +1,12 @@
+<ul>
+    <li *ngFor="let module of group.subModules">
+      <a (click)="onValueSelected(module)" role="button" *ngIf="module.subModules.length == 0">{{ module.moduleTitle }}</a>
+      <p *ngIf="module.subModules.length > 0" class="mb-0">{{module.moduleTitle}}</p>
+      <ul>
+        <li *ngFor="let subModule of module.subModules">
+          <a href="#">{{ subModule.moduleTitle }}</a>
+          <app-level-display [group]="subModule"></app-level-display>
+        </li>
+      </ul>
+    </li>
+</ul>

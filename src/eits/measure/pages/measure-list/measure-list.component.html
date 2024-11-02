@@ -1,0 +1,58 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Measures</mat-card-title>
+    <span style="flex: 1 1 auto;"></span>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      By Catalog API
+    </p>
+    <mat-form-field appearance="outline" class="p-2">
+      <mat-label>Versioon</mat-label>
+      <mat-select [(value)]="selectedVersion" (selectionChange)="onVersionChange()">
+        <mat-option *ngFor="let version of versions" [value]="version">{{ version }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="p-2 w-50">
+      <mat-label>Group</mat-label>
+      <mat-select [(value)]="selectedGroup" [disabled]="isLoadingVersion">
+        <mat-option *ngFor="let group of moduleGroups" [value]="group">{{ group.moduleTitle }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <app-level-display [group]="selectedGroup"
+      (levelSelected)="onLevelChange($event)"
+    ></app-level-display>
+
+    <div *ngIf="tableLoading">
+      <p>Loading Table...</p>
+    </div>
+
+    <div *ngIf="!tableLoading && filteredMeasures.length > 0">
+    <table mat-table [dataSource]="filteredMeasures" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="tüüp">
+        <th mat-header-cell *matHeaderCellDef> Tüüp </th>
+        <td mat-cell *matCellDef="let element"> {{element.groupType}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="tunnus">
+        <th mat-header-cell *matHeaderCellDef> Tunnus </th>
+        <td mat-cell *matCellDef="let element"> {{element.measureCode}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="kirjeldus">
+        <th mat-header-cell *matHeaderCellDef> Kirjeldus </th>
+        <td mat-cell *matCellDef="let element"> <div [innerHTML]="element.bodyWithTitle"></div> </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  </mat-card-content>
+</mat-card>
