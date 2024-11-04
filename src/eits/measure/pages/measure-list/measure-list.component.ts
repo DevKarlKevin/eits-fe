@@ -6,11 +6,11 @@ import {MatTableModule} from '@angular/material/table';
 import {MEASURE_LIST_TABLE_COLUMNS, VERSIONS} from '../../measure.const';
 import {MatSelectModule} from '@angular/material/select';
 import {CommonModule} from '@angular/common';
-import {ModuleGroup} from '../../../models/module-group.component';
 import {LevelDisplayComponent} from '../../../components/level-display/level-display.component';
 import {ModulesGroup} from '../../../models/modules-group.component';
 import {Measure} from '../../../models/measure.component';
 import {MeasureGroup} from '../../../models/measure-group.component';
+import {LoadingComponent} from "../../../components/loading/loading.component";
 
 @Component({
   selector: 'app-measure-list',
@@ -21,7 +21,8 @@ import {MeasureGroup} from '../../../models/measure-group.component';
     MatCardModule,
     MatTableModule,
     MatSelectModule,
-    LevelDisplayComponent
+    LevelDisplayComponent,
+    LoadingComponent
   ],
   templateUrl: './measure-list.component.html'
 })
@@ -34,7 +35,9 @@ export class MeasureListComponent implements OnInit {
   selectedGroup: ModulesGroup = new ModulesGroup();
   moduleGroups: ModulesGroup[] = [];
   isLoadingVersion = false;
+  isLoading = false;
   tableLoading = false;
+  errorMsg = '';
 
   constructor(private measureService: MeasureService) {
   }
@@ -45,9 +48,14 @@ export class MeasureListComponent implements OnInit {
 
   onVersionChange(): void {
     this.isLoadingVersion = true;
+    this.isLoading = true;
     this.measureService.getCatalogByVersion(this.selectedVersion).subscribe(response => {
       this.moduleGroups = response.modules;
       this.isLoadingVersion = false;
+      this.isLoading = false;
+    }, error => {
+      this.errorMsg = error.message;
+      this.isLoading = false;
     });
   }
 

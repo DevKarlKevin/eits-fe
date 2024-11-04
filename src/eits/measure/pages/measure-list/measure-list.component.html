@@ -1,4 +1,5 @@
 <mat-card>
+  <app-loading *ngIf="isLoading"></app-loading>
   <mat-card-header>
     <mat-card-title>Measures</mat-card-title>
     <span style="flex: 1 1 auto;"></span>
@@ -6,6 +7,9 @@
   <mat-card-content>
     <p>
       By Catalog API
+    </p>
+    <p class="text-danger" *ngIf="errorMsg">
+      Midagi läks valesti: {{errorMsg}}
     </p>
     <mat-form-field appearance="outline" class="p-2">
       <mat-label>Versioon</mat-label>

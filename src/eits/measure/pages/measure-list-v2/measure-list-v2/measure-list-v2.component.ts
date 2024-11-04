@@ -34,6 +34,7 @@ export class MeasureListV2Component implements OnInit {
   levelOptions: MenuGroup[] = [];
   isLoadingVersion = false;
   tableLoading = false;
+  errorMsg = '';
 
   constructor(private measureService: MeasureService) {
   }
@@ -47,7 +48,7 @@ export class MeasureListV2Component implements OnInit {
     this.measureService.getContentTree(this.selectedVersion).subscribe(response => {
       this.topLevelGroups = response;
       this.isLoadingVersion = false;
-    });
+    }, error => this.errorMsg = error);
   }
 
   onGroupChange() {

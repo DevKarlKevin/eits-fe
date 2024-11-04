@@ -7,6 +7,9 @@
     <p>
       By Content Tree API
     </p>
+    <p class="text-danger" *ngIf="errorMsg">
+      Midagi läks valesti: {{errorMsg}}
+    </p>
     <mat-form-field appearance="outline" class="p-2">
       <mat-label>Versioon</mat-label>
       <mat-select [(value)]="selectedVersion" (selectionChange)="onVersionChange()">
